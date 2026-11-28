@@ -6,6 +6,11 @@ and the project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Show only the battery percentage for AULA F108 Pro, without the permanent
+  "charging status unknown" suffix.
+
 ### Fixed
 
 - Retry post-publication release and asset attestation verification when GitHub

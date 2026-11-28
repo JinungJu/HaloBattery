@@ -1713,7 +1713,9 @@ sources command `20 01`; its lines 174-185 define the additive checksum.
 checksum and range, and keeps charging unknown. Native writes must complete the
 actual padded output size. Stable per-path keys keep identical receivers separate;
 the old singleton key is migrated only when exactly one eligible receiver exists.
-No short-request fallback is added.
+No short-request fallback is added. The UI omits the permanent "charging status
+unknown" suffix for this model and displays only the percentage; charging-dependent
+alerts and estimates remain disabled.
 
 ### MCHOSE K7 V2 Ultra+
 

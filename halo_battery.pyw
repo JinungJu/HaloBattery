@@ -1332,7 +1332,8 @@ def device_state(st: DeviceStatus, left: str = "", *, language: str = "en") -> s
         state = i18n.translate("state.level", language=language, level=st.level)
         if st.charging:
             state = i18n.translate("state.charging", language=language, state=state)
-        elif not st.charging_known:
+        elif not st.charging_known and st.source != "aula_f108":
+            # F108 Pro reports only a percentage; omit its permanent unknown-state suffix.
             state = i18n.translate("state.charging_unknown", language=language, state=state)
         if not st.online:
             state = i18n.translate("state.asleep", language=language, state=state)

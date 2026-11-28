@@ -87,6 +87,31 @@ class EveryCombinationTests(unittest.TestCase):
 
 
 class SpecificTests(unittest.TestCase):
+    def test_aula_f108_shows_only_percentage_in_every_language(self):
+        for code, level in itertools.product(i18n.LANGUAGES, (0, 32, 100)):
+            with self.subTest(language=code, level=level):
+                st = make(level, name="AULA F108 Pro", source="aula_f108",
+                          charging_known=False)
+                state = i18n.translate("state.level", language=code, level=level)
+                self.assertEqual(hb.device_state(st, LEFT, language=code), state)
+                self.assertEqual(hb.describe(st, left=LEFT, language=code),
+                                 i18n.translate("device.description", language=code,
+                                                name=st.name, state=state))
+                self.assertFalse(st.charging_known)
+
+    def test_aula_f108_keeps_other_state_details(self):
+        for code in i18n.LANGUAGES:
+            with self.subTest(language=code):
+                st = make(32, source="aula_f108", charging_known=False, online=False)
+                state = i18n.translate("state.level", language=code, level=32)
+                self.assertEqual(hb.device_state(st, LEFT, language=code),
+                                 i18n.translate("state.asleep", language=code, state=state))
+                st.online = True
+                st.charging = True
+                st.charging_known = True
+                self.assertEqual(hb.device_state(st, LEFT, language=code),
+                                 i18n.translate("state.charging", language=code, state=state))
+
     def test_english_table(self):
         for kwargs, left, expected in (
                 (dict(level=85), "", "85%"),
